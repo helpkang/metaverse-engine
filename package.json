@@ -1,0 +1,29 @@
+{
+    "name": "metaverse-engine",
+    "version": "1.0.0",
+    "main": "src/main.ts",
+    "license": "MIT",
+    "keywords": ["metaverse", "engine", "game", "framework", "test", "typescript", "nodejs"],
+    "homepage": "https://github.com/helpkang/metaverse-engine",
+    "scripts": {
+        "build": "webpack-cli",
+        "start": "webpack-dev-server",
+        "tsinit": "tsc --init"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.18.0",
+        "@babel/plugin-proposal-object-rest-spread": "^7.18.0",
+        "@babel/preset-typescript": "^7.17.12",
+        "babel-loader": "^8.2.5",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "html-webpack-plugin": "^5.5.0",
+        "ts-loader": "^9.3.0",
+        "typescript": "^4.6.4",
+        "webpack": "^5.72.1",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.9.0"
+    },
+    "dependencies": {
+        "webpack-node-externals": "^3.0.0"
+    }
+}

@@ -2,6 +2,7 @@ const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
 
 module.exports = {
     entry: "./src/main.ts",
@@ -30,6 +31,10 @@ module.exports = {
                 }),
             },
         ],
+    },
+    resolve: {
+        modules: [path.join(__dirname, "src"), "node_modules"], // 모듈 위치
+        extensions: [".ts", ".js"],
     },
     devServer: {
         static: {

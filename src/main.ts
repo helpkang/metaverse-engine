@@ -1,76 +1,48 @@
+import { Circle, FillCircle, FillRectangle, Rectangle } from "./drawable";
+import { Direction, DrawEngine, DrawEngineImpl } from "./DrawEngine";
+
 const app = document.getElementById("app");
 if (!app) {
   throw new Error("app not found");
 }
 
+const engine:DrawEngine = new DrawEngineImpl(app);
+const myCircle = new Circle({x:100, y:100, radius:50, color:'blue'});
 
-class Circle {
-    
-    constructor(public x: number, public y: number, public radius: number, public color: string = 'black') {}
-
-    update(deltaX: number, deltaY: number) {
-        this.x += deltaX;
-        this.y += deltaY;
-    }
-
-    draw(ctx: CanvasRenderingContext2D) {
-        ctx.beginPath();
-        ctx.strokeStyle = this.color;
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.stroke();
-    }
-}
-
-const canvas = makeElement(app);
-const ctx = getContext(canvas);
-
-const c  = new Circle(100, 75, 50, 'blue');
-c.draw(ctx);
-const step = (timestamp: number)=>{
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    c.update(.2,.2);
-    c.draw(ctx);
-    requestAnimationFrame(step);
-}
-requestAnimationFrame(step)
-// ctx.beginPath();
-// ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-// ctx.stroke();
-
-///// init /////
-
-function makeElement(app: HTMLElement): HTMLCanvasElement {
-  const node = document.createElement("canvas");
-  node.id = "canvas";
-//   node.style.width = "100%";
-//   node.style.height = "100%";
-  app.appendChild(node);
-  const resize = () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    node.width = w;
-    node.height = h;
+engine.addEvent((d: Direction, size: number )=>{
+  switch(d){
+    case Direction.Up:
+      myCircle.update(0, -size);
+      break;
+      case Direction.Down:
+      myCircle.update(0, size);
+      break;
+      case Direction.Left:
+      myCircle.update(-size, 0);
+      break;
+      case Direction.Right:
+      myCircle.update(size, 0);
+      break;
   }
-//   window.addEventListener("resize", resize);
-  resize();
+  
+});
+engine.addDrawable(new FillCircle({x:200, y:200, radius:40}));
+engine.addDrawable(new Rectangle({x:100, y:100, w:100, h:100, color:'red'}));
+engine.addDrawable(new FillRectangle({x:300, y:300, w:50, h:50}));
+engine.addDrawable(myCircle);
 
-  return node;
-}
+// function getWebGL(canvas: HTMLCanvasElement): WebGLRenderingContext {
+//   const gl = canvas.getContext("webgl"); //|| canvas.getContext("experimental-webgl");
+//   if (!gl) {
+//     throw new Error("gl not found");
+//   }
+//   return gl;
+// }
 
-function getWebGL(canvas: HTMLCanvasElement): WebGLRenderingContext {
-  const gl = canvas.getContext("webgl"); //|| canvas.getContext("experimental-webgl");
-  if (!gl) {
-    throw new Error("gl not found");
-  }
-  return gl;
-}
-
-function getContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
-  const gl = canvas.getContext("2d");
-  if (!gl) {
-    throw new Error("gl not found");
-  }
-  return gl;
-}
-
-
+// function getContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
+//   const gl = canvas.getContext("2d");
+//   if (!gl) {
+//     throw new Error("gl not found");
+//   }
+//   return gl;
+// }

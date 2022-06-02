@@ -1,3 +1,8 @@
+import {
+  CollisionCheckerTmpImpl,
+  CollisionSize,
+  DrawEngine,
+} from "../datatype";
 import { Drawable } from "./Drawable";
 
 export interface CircleValue {
@@ -13,14 +18,45 @@ interface CircleValueRequired extends CircleValue {
 
 export class Circle implements Drawable {
   value: CircleValueRequired;
+  drawEngine?: DrawEngine;
+
   constructor(value: CircleValue) {
     this.value = { color: "black", ...value };
   }
+  register(drawEngine: DrawEngine): void {
+    this.drawEngine = drawEngine;
+  }
+
+  isEqual(d: Drawable): boolean {
+    if (d instanceof Circle) {
+      return (
+        this.value.x === d.value.x &&
+        this.value.y === d.value.y &&
+        this.value.radius === d.value.radius
+      );
+    }
+    return false;
+  }
+  getCollisionSize(): CollisionSize {
+    const { x, y, radius } = this.value;
+    const swidth = radius * 2;
+    return { x: x - radius, y: y - radius, w: swidth, h: swidth };
+  }
 
   update(deltaX: number, deltaY: number) {
+    if (deltaX === 0 && deltaY === 0) return;
     const { value } = this;
     value.x += deltaX;
     value.y += deltaY;
+    const csize = this.getCollisionSize();
+    const checker = new CollisionCheckerTmpImpl();
+    const isNotCollision = this.drawEngine?.getDrables().filter(d=>!this.isEqual(d)).every((d) => {
+      return !checker.isCollision(csize, d.getCollisionSize());
+    });
+    if (!isNotCollision) {
+      value.x -= deltaX;
+      value.y -= deltaY;
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -43,5 +79,4 @@ export class FillCircle extends Circle {
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.fill();
   }
-
 }

@@ -1,17 +1,5 @@
 import { Drawable } from "./drawable";
-
-export interface DrawEngine {
-  addEvent(event: (d: Direction, size: number) => void): void;
-  draw(time: number): void;
-  addDrawable(drawable: Drawable): void;
-}
-
-export enum Direction {
-  Up,
-  Down,
-  Left,
-  Right,
-}
+import { DrawEngine, Direction } from "./datatype";
 
 export class DrawEngineImpl implements DrawEngine {
   ctx: CanvasRenderingContext2D;
@@ -26,20 +14,23 @@ export class DrawEngineImpl implements DrawEngine {
     this.refresh();
     this.eventHaddle();
   }
+  getDrables(): Drawable[] {
+    return [...this.drawbles];
+  }
 
   private eventHaddle() {
-    window.addEventListener('keydown', (e:KeyboardEvent)=>{
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
       const key = e.key;
-      if (key === 'ArrowUp') {
+      if (key === "ArrowUp") {
         this.events.forEach((event) => event(Direction.Up, 10));
-      } else if (key === 'ArrowDown') {
+      } else if (key === "ArrowDown") {
         this.events.forEach((event) => event(Direction.Down, 10));
-      } else if (key === 'ArrowLeft') {
+      } else if (key === "ArrowLeft") {
         this.events.forEach((event) => event(Direction.Left, 10));
-      } else if (key === 'ArrowRight') {
+      } else if (key === "ArrowRight") {
         this.events.forEach((event) => event(Direction.Right, 10));
       }
-    })
+    });
   }
   addEvent(event: (d: Direction, size: number) => void) {
     this.events.push(event);
@@ -63,6 +54,7 @@ export class DrawEngineImpl implements DrawEngine {
 
   addDrawable(drawable: Drawable) {
     this.drawbles.push(drawable);
+    drawable.register(this);
   }
 
   private makeElement(app: HTMLElement): HTMLCanvasElement {

@@ -1,5 +1,6 @@
 import { Circle, FillCircle, FillRectangle, Rectangle } from "./drawable";
-import { Direction, DrawEngine, DrawEngineImpl } from "./DrawEngine";
+import { DrawEngineImpl } from "./DrawEngine";
+import { Direction, DrawEngine } from "./datatype";
 
 const app = document.getElementById("app");
 if (!app) {
@@ -7,7 +8,7 @@ if (!app) {
 }
 
 const engine:DrawEngine = new DrawEngineImpl(app);
-const myCircle = new Circle({x:100, y:100, radius:50, color:'blue'});
+const myCircle = new Circle({x:100, y:100, radius:10, color:'blue'});
 
 engine.addEvent((d: Direction, size: number )=>{
   switch(d){
@@ -26,9 +27,9 @@ engine.addEvent((d: Direction, size: number )=>{
   }
   
 });
-engine.addDrawable(new FillCircle({x:200, y:200, radius:40}));
-engine.addDrawable(new Rectangle({x:100, y:100, w:100, h:100, color:'red'}));
-engine.addDrawable(new FillRectangle({x:300, y:300, w:50, h:50}));
+engine.addDrawable(new FillCircle({x:200, y:200, radius:20}));
+engine.addDrawable(new Rectangle({x:150, y:100, w:100, h:20, color:'red'}));
+engine.addDrawable(new FillRectangle({x:300, y:300, w:50, h:30}));
 engine.addDrawable(myCircle);
 
 // function getWebGL(canvas: HTMLCanvasElement): WebGLRenderingContext {

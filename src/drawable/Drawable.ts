@@ -1,4 +1,5 @@
-import { DrawEngine, GetCollisionSize } from "../datatype";
+import { GetCollisionSize } from "../collision/Collision";
+import { DrawEngine } from "../engine/DrawEngine";
 
 export interface Drawable extends GetCollisionSize{
   register(drawEngine: DrawEngine): void;

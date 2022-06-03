@@ -1,5 +1,5 @@
-import { Drawable } from "./drawable";
-import { DrawEngine, Direction } from "./datatype";
+import { Drawable } from "../../drawable";
+import { DrawEngine, Direction } from "../DrawEngine";
 
 export class DrawEngineImpl implements DrawEngine {
   ctx: CanvasRenderingContext2D;
@@ -14,6 +14,7 @@ export class DrawEngineImpl implements DrawEngine {
     this.refresh();
     this.eventHaddle();
   }
+
   getDrables(): Drawable[] {
     return [...this.drawbles];
   }
@@ -32,6 +33,7 @@ export class DrawEngineImpl implements DrawEngine {
       }
     });
   }
+  
   addEvent(event: (d: Direction, size: number) => void) {
     this.events.push(event);
   }

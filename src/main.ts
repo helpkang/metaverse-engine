@@ -1,6 +1,6 @@
 import { Circle, FillCircle, FillRectangle, Rectangle } from "./drawable";
-import { DrawEngineImpl } from "./DrawEngine";
-import { Direction, DrawEngine } from "./datatype";
+import { DrawEngineImpl } from "./engine/impl/DrawEngineImpl";
+import { Direction, DrawEngine } from "./engine/DrawEngine";
 
 const app = document.getElementById("app");
 if (!app) {

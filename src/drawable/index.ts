@@ -1,5 +1,5 @@
 export { Drawable } from "./Drawable";
 
-export { Circle, FillCircle, CircleValue } from "./Circle";
+export { Circle, FillCircle, CircleValue } from "./impl/Circle";
 
-export { Rectangle, FillRectangle, RectangleValue } from "./Rectangle";
+export { Rectangle, FillRectangle, RectangleValue } from "./impl/Rectangle";

@@ -1,9 +1,9 @@
 import {
   CollisionCheckerTmpImpl,
-  CollisionSize,
-  DrawEngine,
-} from "../datatype";
-import { Drawable } from "./Drawable";
+} from "../../collision/impl/CollisionChekerImpl";
+import { CollisionSize } from "../../collision/Collision";
+import { DrawEngine } from "../../engine/DrawEngine";
+import { Drawable } from "../Drawable";
 
 export interface RectangleValue {
   x: number;
